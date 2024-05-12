@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       repository:
-        description: 'Repository to sync in the format git@github.com:owner/repo.git'
+        description: 'Target repository (format git@github.com:owner/repo.git)'
         required: true
         type: string
       ref:
@@ -12,6 +12,11 @@ on:
         required: true
         type: string
         default: 'main'
+      push_tags:
+        description: 'If tags should be pushed to the target repository'
+        required: false
+        type: boolean
+        default: false
     secrets:
       REPO_SYNC_PUSH_KEY:
         required: true
@@ -49,4 +54,4 @@ jobs:
           git config --global user.email "<>"
           git config --unset-all http.https://github.com/.extraheader
           git remote add public ${{ inputs.repository }}
-          git push --tags public ${{ inputs.ref }}
+          git push {{ inputs.push_tags && '--tags' || '' }} public ${{ inputs.ref }}
