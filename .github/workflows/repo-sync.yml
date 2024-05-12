@@ -1,0 +1,52 @@
+name: Repo sync
+
+on:
+  workflow_call:
+    inputs:
+      repository:
+        description: 'Repository to sync in the format git@github.com:owner/repo.git'
+        required: true
+        type: string
+      ref:
+        description: 'Ref to sync'
+        required: true
+        type: string
+        default: 'main'
+    secrets:
+      REPO_SYNC_PUSH_KEY:
+        required: true
+
+jobs:
+  sync-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+
+      - name: Check ref
+        run: |
+          if [ "$(git rev-parse --abbrev-ref HEAD)" != "${{ inputs.ref }}" ]; then exit 1; fi
+
+      - name: Run SSH agent
+        run: |
+          eval "$(ssh-agent -s)"
+          echo SSH_AUTH_SOCK="$SSH_AUTH_SOCK" >> "$GITHUB_ENV"
+          echo SSH_AGENT_PID="$SSH_AGENT_PID" >> "$GITHUB_ENV"
+
+      - name: Add SSH key
+        run: |
+          mkdir -p /home/runner/.ssh
+          echo "${{ secrets.REPO_SYNC_PUSH_KEY }}" > /home/runner/.ssh/github_actions
+          chmod 600 /home/runner/.ssh/github_actions
+          ssh-add /home/runner/.ssh/github_actions
+
+      - name: Sync repo
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "<>"
+          git config --unset-all http.https://github.com/.extraheader
+          git remote add public ${{ inputs.repository }}
+          git push --tags public ${{ inputs.ref }}
