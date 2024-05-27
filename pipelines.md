@@ -55,3 +55,6 @@ The action has inputs and secrets. The inputs are:
 - push_tags: Boolean if you want to push tags or not
 
 The secret that is needed is `REPO_SYNC_PUSH_KEY`. This is a SSH Key. In the public repository a deploy key with Read-write permissions can be configured.
+The private key should be added to the secrets of the private repository.
+
+More information about deploy keys can be found in [the GitHub documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys#set-up-deploy-keys).
