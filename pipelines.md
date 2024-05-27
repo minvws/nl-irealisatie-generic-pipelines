@@ -51,7 +51,7 @@ jobs:
 The action has inputs and secrets. The inputs are:
 
 - repository: An SSH URL, like `git@github.com:user/repo.git`
-- ref: The ref (eg. branch) that needs to be synced
+- ref: The ref (e.g. branch) that needs to be synced
 - push_tags: Boolean if you want to push tags or not
 
 The secret that is needed is `REPO_SYNC_PUSH_KEY`. This is a SSH Key. In the public repository a deploy key with Read-write permissions can be configured.
