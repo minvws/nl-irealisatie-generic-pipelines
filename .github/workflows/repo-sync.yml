@@ -50,4 +50,4 @@ jobs:
           git config --global user.email "<>"
           git config --unset-all http.https://github.com/.extraheader
           git remote add public ${{ inputs.repository }}
-          git push ${{ inputs.push_tags && '--tags' || '' }} public ${{ inputs.ref }}
+          git push ${{ inputs.push_tags && '--tags' || '' }} public origin/${{ inputs.ref }}
