@@ -31,10 +31,6 @@ jobs:
         with:
           fetch-depth: '0'
 
-      - name: Check ref
-        run: |
-          if [ "$(git rev-parse --abbrev-ref HEAD)" != "${{ inputs.ref }}" ]; then exit 1; fi
-
       - name: Run SSH agent
         run: |
           eval "$(ssh-agent -s)"
