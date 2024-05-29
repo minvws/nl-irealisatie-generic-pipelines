@@ -4,6 +4,10 @@ inputs:
   sonar-token:
     description: 'Sonar token'
     required: true
+  projectBaseDir:
+    description: Set the sonar.projectBaseDir analysis property
+    required: false
+    default: .
 
 runs:
   using: "composite"
@@ -13,10 +17,13 @@ runs:
       uses: SonarSource/sonarcloud-github-action@v2.2.0
       env:
         SONAR_TOKEN: ${{ inputs.sonar-token }}
+      with:
+        projectBaseDir: ${{ inputs.projectBaseDir }}
     - name: 'Run SonarCloud scanner'
       if: ${{!contains(github.ref, '/pull/')}}
       uses: SonarSource/sonarcloud-github-action@v2.2.0
       env:
         SONAR_TOKEN: ${{ inputs.sonar-token }}
       with:
+        projectBaseDir: ${{ inputs.projectBaseDir }}
         args: -Dsonar.branch.name=${{ github.ref_name }}
