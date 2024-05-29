@@ -1,5 +1,5 @@
-name: "SonarCloud"
-description: "Runs the SonarCloud scanner."
+name: 'Run SonarCloud scanner'
+description: 'Runs the SonarCloud scanner.'
 inputs:
   sonar-token:
     description: 'Sonar token'
@@ -8,12 +8,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: 'SonarCloud'
+    - name: 'Run SonarCloud scanner'
       if: ${{contains(github.ref, '/pull/')}}
       uses: SonarSource/sonarcloud-github-action@v2.2.0
       env:
         SONAR_TOKEN: ${{ inputs.sonar-token }}
-    - name: 'SonarCloud'
+    - name: 'Run SonarCloud scanner'
       if: ${{!contains(github.ref, '/pull/')}}
       uses: SonarSource/sonarcloud-github-action@v2.2.0
       env:
