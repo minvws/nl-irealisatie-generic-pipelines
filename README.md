@@ -3,6 +3,8 @@
 This repository contains a collection of generic GitHub Actions pipelines that can be used in any project.
 The pipelines are designed to be as generic as possible, so they can be easily reused in any project.
 
+For detailed information on our reusable pipelines, please refer to the [Pipelines Documentation](pipelines.md). This document provides details on how to configure and use the pipelines effectively in your projects.
+
 ## Contributing
 
 If you want to contribute a new pipeline, please check the reusable workflow guidelines in the
