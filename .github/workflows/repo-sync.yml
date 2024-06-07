@@ -7,6 +7,16 @@ on:
         description: 'Target repository (format git@github.com:owner/repo.git)'
         required: true
         type: string
+      branch:
+        description: 'Branch to sync'
+        required: true
+        type: string
+        default: 'main'
+      shadow_branch:
+        description: 'private shadow branch of public repository'
+        required: true
+        type: string
+        default: 'main-public'
       ref:
         description: 'Ref to sync'
         required: true
@@ -14,6 +24,11 @@ on:
         default: 'main'
       push_tags:
         description: 'If tags should be pushed to the target repository'
+        required: false
+        type: boolean
+        default: false
+      allow_public_dependabot:
+        description: 'Allow dependabot.yml on the public repository'
         required: false
         type: boolean
         default: false
@@ -29,6 +44,7 @@ jobs:
       - name: Git checkout
         uses: actions/checkout@v4
         with:
+          ref: '${{ inputs.shadow_branch }}'
           fetch-depth: '0'
 
       - name: Run SSH agent
@@ -49,5 +65,15 @@ jobs:
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "<>"
           git config --unset-all http.https://github.com/.extraheader
+          git merge --no-edit origin/${{ inputs.branch }}
+          git push origin HEAD:${{ inputs.shadow_branch }}
+          if [ $? -ne 0 ]; then
+            echo 'Failed to merge without conflicts' && exit 1
+          fi
+          if [ "${{ inputs.allow_public_dependabot }}" == "false" ]; then
+            if [ -e ".github/dependabot.yml" ]; then
+              echo 'Dependabot should not run on the public repo. Please remove this file' && exit 1
+            fi
+          fi
           git remote add public ${{ inputs.repository }}
           git push ${{ inputs.push_tags && '--tags' || '' }} public refs/remotes/origin/${{ inputs.ref }}:refs/heads/${{ inputs.ref }}
