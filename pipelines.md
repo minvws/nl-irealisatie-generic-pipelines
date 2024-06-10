@@ -8,10 +8,15 @@ Available pipelines:
 
 ## Repo sync
 
-This pipeline is designed to synchronize a private repository with a public repository by pushing commits and tags from the private repo to the public repo.
+This pipeline synchronizes:
+
+- a branch on a private repository with a branch on a public repository by merging all commits from the configured branch to the shadow branch.
+  This shadow branch is then pushed to the public repository;
+- all tags on the private repository to the public repository.
 
 > [!CAUTION]
-> This pipeline pushes all commits from the private repository to the public repository. Ensure that the private repository does not contain any sensitive or unwanted commits before running the sync.
+> This pipeline pushes all commits from a branch on the private repository to a branch on the public repository.
+> Ensure that the private repository does not contain any sensitive or unwanted commits before running the sync.
 
 ### Usage
 
