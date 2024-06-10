@@ -62,11 +62,13 @@ jobs:
 
       - name: Sync repo
         run: |
+          git merge --no-edit origin/${{ inputs.branch }}
+          git push origin HEAD:${{ inputs.shadow_branch }}
+
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "<>"
           git config --unset-all http.https://github.com/.extraheader
-          git merge --no-edit origin/${{ inputs.branch }}
-          git push origin HEAD:${{ inputs.shadow_branch }}
+
           if [ $? -ne 0 ]; then
             echo 'Failed to merge without conflicts' && exit 1
           fi
