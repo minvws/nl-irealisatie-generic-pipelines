@@ -78,4 +78,4 @@ jobs:
             fi
           fi
           git remote add public ${{ inputs.repository }}
-          git push ${{ inputs.push_tags && '--tags' || '' }} public refs/remotes/origin/${{ inputs.ref }}:refs/heads/${{ inputs.ref }}
+          git push ${{ inputs.push_tags && '--tags' || '' }} public ${{ inputs.shadow_branch }}:${{ inputs.ref }}
