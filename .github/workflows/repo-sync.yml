@@ -9,17 +9,17 @@ on:
         type: string
       branch:
         description: 'Branch to sync'
-        required: true
+        required: false
         type: string
         default: 'main'
       shadow_branch:
-        description: 'Private shadow branch of public repository'
-        required: true
+        description: 'private shadow branch of public repository'
+        required: false
         type: string
         default: 'main-public'
       ref:
         description: 'Ref to sync'
-        required: true
+        required: false
         type: string
         default: 'main'
       push_tags:
