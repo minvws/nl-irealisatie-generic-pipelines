@@ -62,11 +62,12 @@ jobs:
 
       - name: Sync repo
         run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "<>"
+
           git merge --no-edit origin/${{ inputs.branch }}
           git push origin HEAD:${{ inputs.shadow_branch }}
 
-          git config --global user.name "GitHub Actions Bot"
-          git config --global user.email "<>"
           git config --unset-all http.https://github.com/.extraheader
 
           if [ $? -ne 0 ]; then
