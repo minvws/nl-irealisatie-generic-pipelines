@@ -1,6 +1,7 @@
 name: Repo sync
 
 on:
+  workflow_dispatch: {}
   workflow_call:
     inputs:
       repository:
