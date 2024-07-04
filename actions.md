@@ -69,7 +69,6 @@ This workflow is executed automatically on push of tags.
 
 In the code below you need to replace the `<python_version>` and `<package_file_name>`. See the [configuration section](#configuration-1).
 
-
 ```yml
 name: Build Python project
 
