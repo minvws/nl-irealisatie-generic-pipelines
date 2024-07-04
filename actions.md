@@ -86,7 +86,7 @@ jobs:
         uses: minvws/nl-irealisatie-generic-pipelines/.github/actions/python-venv-package@main
         with:
           python_version: <python_version>
-          package_file_name: <name_of_the_package>
+          package_file_name: <package_file_name>
 ```
 
 </details>
