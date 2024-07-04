@@ -56,7 +56,7 @@ The action has inputs. The inputs are:
 
 ## Python - venv package
 
-This pipeline is designed to export a venv package for the specified Python version with the installed requirements. When [Poetry](https://python-poetry.org/) is used, the requirments will be exported and the requirements will be installed in the venv.
+This pipeline is designed to export a venv package for the specified Python version with the installed requirements. When [Poetry](https://python-poetry.org/) is used, the requirements will be exported and the requirements will be installed in the venv.
 
 ### Usage
 
@@ -102,4 +102,4 @@ The action has inputs. The inputs are:
 
 This action will create a `.tar.gz` file containing the `.venv` directory. The file will be available as an artifact.
 
-The name of the artifact will be `<package_file_name>_venv_<tag_version>_python<python_version>.tar.gz`. For example  `nl-example-package_venv_v0.0.1_python3.9.tar.gz`.
+The name of the artifact will be `<package_file_name>_venv_<tag_version>_python<python_version>.tar.gz`. For example `nl-example-package_venv_v0.0.1_python3.9.tar.gz`.
