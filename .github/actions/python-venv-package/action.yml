@@ -17,7 +17,7 @@ runs:
         
     - name: Set package file name
       shell: bash
-      run: echo "PACKAGE_FILE_NAME=${{ inputs.package_file_name }}_venv_${{ env.RELEASE_VERSION }}_python${{ matrix.python_version }}" >> $GITHUB_ENV
+      run: echo "PACKAGE_FILE_NAME=${{ inputs.package_file_name }}_venv_${{ env.RELEASE_VERSION }}_python${{ inputs.python_version }}" >> $GITHUB_ENV
 
     - name: Checkout code
       uses: actions/checkout@v4
