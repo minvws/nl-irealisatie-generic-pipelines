@@ -7,6 +7,9 @@ inputs:
   package_file_name:
     description: "Name of the package"
     required: true
+  source_directory:
+    description: "The path, relative to the repo root, that contains project files including pyroject.lock"
+    default: '.'
 
 runs:
   using: "composite"
@@ -27,6 +30,9 @@ runs:
       with:
         python-version: ${{ inputs.python_version }}
 
+    - name: Checkout source directory
+      run: cd ${{ inputs.source_directory }} 
+      
     - name: Check if requirements file exists
       id: check_requirements_file
       shell: bash
