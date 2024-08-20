@@ -60,7 +60,7 @@ This pipeline is designed to export a venv package for the specified Python vers
 
 ### Usage
 
-Here is a basic example on how you can integrate it in your project.
+Here is are basic examples on how you can integrate it in your project.
 
 <details>
   <summary>Example workflow</summary>
@@ -87,9 +87,44 @@ jobs:
         with:
           python_version: <python_version>
           package_file_name: <package_file_name>
+
 ```
 
 </details>
+
+<details>
+  <summary>Example workflow self checkout</summary>
+
+This workflow is executed automatically on push of tags. The workflow will checkout the repo and the action won't. Now it is possible to run additional actions before using the venv package action.
+
+In the code below you need to replace the `<python_version>` and `<package_file_name>`. See the [configuration section](#configuration-1).
+
+```yml
+name: Build Python project
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  venv-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Using the action
+      - name: Build venv package
+        uses: minvws/nl-irealisatie-generic-pipelines/.github/actions/python-venv-package@main
+        with:
+          python_version: <python_version>
+          package_file_name: <package_file_name>
+          checkout_code: 'false'
+```
+
+</details>
+
 
 ### Configuration
 
@@ -97,6 +132,8 @@ The action has inputs. The inputs are:
 
 - python_version: Semver version of the Python version you want to use. For example `3.11` or `3.9`.
 - package_file_name: File name for the venv package. For example `nl-example-package`.
+- checkout_code: Boolean value inside string to enable or disable checkout code
+ in the action. For example `'true'` or `'false'`. Default `'true'`.
 
 ### Result
 
