@@ -125,7 +125,6 @@ jobs:
 
 </details>
 
-
 ### Configuration
 
 The action has inputs. The inputs are:
