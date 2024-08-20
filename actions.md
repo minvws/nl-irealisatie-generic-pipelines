@@ -60,7 +60,7 @@ This pipeline is designed to export a venv package for the specified Python vers
 
 ### Usage
 
-Here is are basic examples on how you can integrate it in your project.
+Here are basic examples on how you can integrate it in your project.
 
 <details>
   <summary>Example workflow</summary>
@@ -120,7 +120,7 @@ jobs:
         with:
           python_version: <python_version>
           package_file_name: <package_file_name>
-          checkout_code: 'false'
+          checkout_repository: 'false'
 ```
 
 </details>
@@ -131,7 +131,7 @@ The action has inputs. The inputs are:
 
 - python_version: Semver version of the Python version you want to use. For example `3.11` or `3.9`.
 - package_file_name: File name for the venv package. For example `nl-example-package`.
-- checkout_code: Boolean value inside string to enable or disable checkout code
+- checkout_repository: Boolean value inside string to enable or disable checkout repository
  in the action. For example `'true'` or `'false'`. Default `'true'`.
 
 ### Result
