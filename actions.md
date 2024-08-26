@@ -133,6 +133,8 @@ The action has inputs. The inputs are:
 - package_file_name: File name for the venv package. For example `nl-example-package`.
 - checkout_repository: Boolean value inside string to enable or disable checkout repository
  in the action. For example `'true'` or `'false'`. Default `'true'`.
+- working_directory: Directory containing the Python project. The directory should contain
+ a `requirements.txt` file or a `pyproject.toml` file. Default `'.'`.
 
 ### Result
 
