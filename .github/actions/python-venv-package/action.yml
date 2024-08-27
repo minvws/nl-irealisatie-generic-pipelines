@@ -36,6 +36,7 @@ runs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ inputs.python_version }}
+        cache: pip
 
     - name: Check if requirements file exists
       id: check_requirements_file
