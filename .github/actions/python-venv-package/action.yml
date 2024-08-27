@@ -11,6 +11,10 @@ inputs:
     description: "Whether to checkout the repository (true or false)"
     required: false
     default: 'true'
+  working_directory:
+    description: "Working directory containing a requirements.txt or poetry.lock file"
+    required: false
+    default: '.'
 
 runs:
   using: "composite"
@@ -18,7 +22,7 @@ runs:
     - name: Set release version
       shell: bash
       run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-        
+
     - name: Set package file name
       shell: bash
       run: echo "PACKAGE_FILE_NAME=${{ inputs.package_file_name }}_venv_${{ env.RELEASE_VERSION }}_python${{ inputs.python_version }}" >> $GITHUB_ENV
@@ -36,7 +40,7 @@ runs:
       id: check_requirements_file
       shell: bash
       run: |
-        if [ -f "requirements.txt" ]; then
+        if [ -f "${{ inputs.working_directory }}/requirements.txt" ]; then
           echo "::notice::requirements.txt file exists"
           echo "file_exists=true" >> $GITHUB_OUTPUT
         else
@@ -48,7 +52,7 @@ runs:
       id: check_poetry_file
       shell: bash
       run: |
-        if [ -f "poetry.lock" ]; then
+        if [ -f "${{ inputs.working_directory }}/poetry.lock" ]; then
           echo "::notice::poetry.lock file exists"
           echo "file_exists=true" >> $GITHUB_OUTPUT
         else
@@ -61,6 +65,7 @@ runs:
         steps.check_poetry_file.outputs.file_exists == 'true' &&
         steps.check_requirements_file.outputs.file_exists == 'false'
       shell: bash
+      working-directory: ${{ inputs.working_directory }}
       run: |
         pip3 install poetry
         poetry self add poetry-plugin-export
@@ -69,27 +74,31 @@ runs:
     - name: Exit if requirements.txt file does not exist
       shell: bash
       run: |
-        if [ ! -f "requirements.txt" ]; then
+        if [ ! -f "${{ inputs.working_directory }}/requirements.txt" ]; then
           echo "::error::requirements.txt file does not exist"
           exit 1
         fi
 
     - name: Create venv
       shell: bash
+      working-directory: ${{ inputs.working_directory }}
       run: |
         python -m venv .venv
         . .venv/bin/activate
         pip install -r requirements.txt
 
     - name: Fix python3 symlink - back to default location
+      working-directory: ${{ inputs.working_directory }}
       shell: bash
       run: cd .venv/bin && rm python3 python && ln -s /usr/bin/python3 python3 && ln -s /usr/bin/python python
 
     - name: Add version file
+      working-directory: ${{ inputs.working_directory }}
       shell: bash
       run: 'echo "{ \"version\": \"${{ env.RELEASE_VERSION }}\", \"git_ref\": \"$GITHUB_SHA\"}" > .venv/version.json'
 
     - name: Create archive
+      working-directory: ${{ inputs.working_directory }}
       shell: bash
       run: tar -czf ${{ env.PACKAGE_FILE_NAME }}.tar.gz .venv
 
@@ -97,4 +106,4 @@ runs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{ env.PACKAGE_FILE_NAME }}
-        path: ${{ env.PACKAGE_FILE_NAME }}.tar.gz
+        path: ${{ inputs.working_directory }}/${{ env.PACKAGE_FILE_NAME }}.tar.gz
