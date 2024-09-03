@@ -11,6 +11,10 @@ inputs:
     description: "Whether to checkout the repository (true or false)"
     required: false
     default: 'true'
+  split_git_requirements:
+    description: "Whether to split git requirements dependencies (true or false)"
+    required: false
+    default: 'true'
   working_directory:
     description: "Working directory containing a requirements.txt or poetry.lock file"
     required: false
@@ -28,7 +32,7 @@ runs:
       run: echo "PACKAGE_FILE_NAME=${{ inputs.package_file_name }}_venv_${{ env.RELEASE_VERSION }}_python${{ inputs.python_version }}" >> $GITHUB_ENV
 
     - name: Checkout code
-      if: ${{ inputs.checkout_repository == 'true' }}
+      if: inputs.checkout_repository == 'true'
       uses: actions/checkout@v4
 
     - name: Setup python
@@ -110,10 +114,21 @@ runs:
         echo "VIRTUAL_ENV=${VIRTUAL_ENV}" >> $GITHUB_ENV
 
     - name: Install requirements
-      if: steps.cache-venv.outputs.cache-hit != 'true'
+      if: steps.cache-venv.outputs.cache-hit != 'true' && inputs.split_git_requirements == 'false'
       shell: bash
       working-directory: ${{ inputs.working_directory }}
       run: pip install -r requirements.txt
+
+    - name: Install requirements (split github)
+      if: steps.cache-venv.outputs.cache-hit != 'true' && inputs.split_git_requirements == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        grep 'git\+' requirements.txt > requirements-vcs.txt
+        grep 'git\+' -v requirements.txt > requirements-hashed.txt
+        pip install --no-deps -r requirements-vcs.txt
+        pip install -r requirements-hashed.txt
+        rm requirements-vcs.txt requirements-hashed.txt
 
     - uses: actions/cache/save@v4
       if: steps.cache-venv.outputs.cache-hit != 'true'
