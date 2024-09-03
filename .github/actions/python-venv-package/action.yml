@@ -119,17 +119,31 @@ runs:
       working-directory: ${{ inputs.working_directory }}
       run: pip install -r requirements.txt
 
-    - name: Install requirements (split github)
+    - name: Split requirements
       if: steps.cache-venv.outputs.cache-hit != 'true' && inputs.split_git_requirements == 'true'
       shell: bash
       working-directory: ${{ inputs.working_directory }}
       run: |
-        grep 'git\+' requirements.txt > requirements-vcs.txt
-        grep 'git\+' -v requirements.txt > requirements-hashed.txt
+        grep 'git\+' requirements.txt > requirements-vcs.txt || true
+        grep 'git\+' -v requirements.txt > requirements-hashed.txt || true
+
+    - name: Install requirements (when split)
+      if: steps.cache-venv.outputs.cache-hit != 'true' && inputs.split_git_requirements == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
         if test -s requirements-vcs.txt; then
           pip install --no-deps -r requirements-vcs.txt
         fi
-        pip install -r requirements-hashed.txt
+        if test -s requirements-hashed.txt; then
+          pip install -r requirements-hashed.txt
+        fi
+
+    - name: Cleanup split requirements
+      if: steps.cache-venv.outputs.cache-hit != 'true' && inputs.split_git_requirements == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
         rm requirements-vcs.txt requirements-hashed.txt
 
     - uses: actions/cache/save@v4
