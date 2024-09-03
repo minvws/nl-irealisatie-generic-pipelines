@@ -126,7 +126,9 @@ runs:
       run: |
         grep 'git\+' requirements.txt > requirements-vcs.txt
         grep 'git\+' -v requirements.txt > requirements-hashed.txt
-        pip install --no-deps -r requirements-vcs.txt
+        if test -s requirements-vcs.txt; then
+          pip install --no-deps -r requirements-vcs.txt
+        fi
         pip install -r requirements-hashed.txt
         rm requirements-vcs.txt requirements-hashed.txt
 
