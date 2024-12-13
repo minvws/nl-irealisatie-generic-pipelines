@@ -5,6 +5,11 @@ inputs:
     description: "PHP version"
     required: true
     default: "8.3"
+secrets:
+  COMPOSER_AUTH_TOKEN:
+    description: "Composer authentication token"
+    required: true,
+
 
 runs:
   using: "composite"
@@ -17,5 +22,5 @@ runs:
 
     - name: Composer install
       env:
-        COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.REPO_READ_ONLY_TOKEN }}"}}'
+        COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.COMPOSER_AUTH_TOKEN }}"}}'
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist

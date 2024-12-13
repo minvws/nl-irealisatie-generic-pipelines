@@ -181,6 +181,7 @@ jobs:
       - name: Install dependencies
         uses: minvws/nl-irealisatie-generic-pipelines/.github/actions/composer-install@main
         with:
+          COMPOSER_AUTH_TOKEN: ${{ secrets.REPO_READ_ONLY_TOKEN }}
           php_version: <php_version>
 ```
 
