@@ -5,11 +5,9 @@ inputs:
     description: "PHP version"
     required: true
     default: "8.3"
-secrets:
   COMPOSER_AUTH_TOKEN:
     description: "Composer authentication token"
-    required: true,
-
+    required: true
 
 runs:
   using: "composite"
