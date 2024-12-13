@@ -5,10 +5,10 @@ Here you can find the available actions. Each section will provide a description
 Available actions:
 
 - Python
-    - [Python - Poetry install](#python---poetry-install)
-    - [Python - venv package](#python---venv-package)
+  - [Python - Poetry install](#python---poetry-install)
+  - [Python - venv package](#python---venv-package)
 - PHP
-    - [PHP - composer install](#php---composer-install)
+  - [PHP - composer install](#php---composer-install)
 
 ## Python - Poetry install
 
