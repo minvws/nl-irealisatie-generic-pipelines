@@ -10,7 +10,7 @@ runs:
   using: "composite"
   steps:
     - name: Install PHP
-      uses: shivammathur/setup-php@master
+      uses: shivammathur/setup-php@v2
       with:
         php-version: "${{ inputs.php_version }}"
         tools: composer
