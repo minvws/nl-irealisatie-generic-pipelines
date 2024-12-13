@@ -171,7 +171,7 @@ on:
       - main
 
 jobs:
-  build-python:
+  build-php:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
