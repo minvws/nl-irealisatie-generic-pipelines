@@ -1,0 +1,24 @@
+name: "Composer install"
+description: "Installs the Composer dependencies for a PHP application"
+inputs:
+  php_version:
+    description: "PHP version"
+    required: true
+    default: "8.3"
+  COMPOSER_AUTH_TOKEN:
+    description: "Composer authentication token"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: "${{ inputs.php_version }}"
+        tools: composer
+
+    - name: Composer install
+      env:
+        COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ inputs.COMPOSER_AUTH_TOKEN }}"}}'
+      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist

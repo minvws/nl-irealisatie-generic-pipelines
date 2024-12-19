@@ -4,8 +4,11 @@ Here you can find the available actions. Each section will provide a description
 
 Available actions:
 
-- [Python - Poetry install](#python---poetry-install)
-- [Python - venv package](#python---venv-package)
+- Python
+  - [Python - Poetry install](#python---poetry-install)
+  - [Python - venv package](#python---venv-package)
+- PHP
+  - [PHP - composer install](#php---composer-install)
 
 ## Python - Poetry install
 
@@ -141,3 +144,51 @@ The action has inputs. The inputs are:
 This action will create a `.tar.gz` file containing the `.venv` directory. The file will be available as an artifact.
 
 The name of the artifact will be `<package_file_name>_venv_<tag_version>_python<python_version>.tar.gz`. For example `nl-example-package_venv_v0.0.1_python3.9.tar.gz`.
+
+## PHP - Composer install
+
+This pipeline is designed to install the dependencies of a PHP project that uses Composer. It will install the dependencies and cache them for future runs.
+
+### Usage
+
+Here is a basic example on how you can integrate it in your project.
+
+<details>
+  <summary>Example workflow</summary>
+
+This workflow is executed automatically on push to the main branch, on a pull request and can also be executed manually from the actions tab `workflow_dispatch`.
+
+In the code below you need to replace `<php_version>` with the PHP version you want to use. For example `8.3` (default) or `8.4`.
+
+```yml
+name: Build PHP project
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-php:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Using the action
+      - name: Install dependencies
+        uses: minvws/nl-irealisatie-generic-pipelines/.github/actions/composer-install@main
+        with:
+          COMPOSER_AUTH_TOKEN: ${{ secrets.REPO_READ_ONLY_TOKEN }}
+          php_version: <php_version>
+```
+
+</details>
+
+### Configuration
+
+The action has inputs. The inputs are:
+
+- php_version: Semver version of the PHP version you want to use. For example `8.2` or `8.3`.
