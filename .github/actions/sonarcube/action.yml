@@ -1,0 +1,29 @@
+name: 'Run SonarQube Cloud scanner'
+description: 'Runs the SonarQube Cloud scanner.'
+inputs:
+  sonar-token:
+    description: 'Sonar token'
+    required: true
+  project-base-dir:
+    description: Set the sonar.projectBaseDir analysis property
+    required: false
+    default: .
+
+runs:
+  using: "composite"
+  steps:
+    - name: 'Run SonarQube Scan'
+      if: ${{contains(github.ref, '/pull/')}}
+      uses: SonarSource/sonarqube-scan-action@v4.2.1
+      env:
+        SONAR_TOKEN: ${{ inputs.sonar-token }}
+      with:
+        projectBaseDir: ${{ inputs.project-base-dir }}
+    - name: 'Run SonarQube Scan'
+      if: ${{!contains(github.ref, '/pull/')}}
+      uses: SonarSource/sonarqube-scan-action@v4.2.1
+      env:
+        SONAR_TOKEN: ${{ inputs.sonar-token }}
+      with:
+        projectBaseDir: ${{ inputs.project-base-dir }}
+        args: -Dsonar.branch.name=${{ github.ref_name }}
