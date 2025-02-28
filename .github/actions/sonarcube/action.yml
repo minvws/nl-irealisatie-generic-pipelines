@@ -1,5 +1,4 @@
 name: 'Run SonarQube Cloud scanner'
-description: 'Runs the SonarQube Cloud scanner.'
 inputs:
   sonar-token:
     description: 'Sonar token'
@@ -10,18 +9,18 @@ inputs:
     default: .
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: 'Run SonarQube Scan'
       if: ${{contains(github.ref, '/pull/')}}
-      uses: SonarSource/sonarqube-scan-action@v4.2.1
+      uses: SonarSource/sonarqube-scan-action@v5
       env:
         SONAR_TOKEN: ${{ inputs.sonar-token }}
       with:
         projectBaseDir: ${{ inputs.project-base-dir }}
     - name: 'Run SonarQube Scan'
       if: ${{!contains(github.ref, '/pull/')}}
-      uses: SonarSource/sonarqube-scan-action@v4.2.1
+      uses: SonarSource/sonarqube-scan-action@v5
       env:
         SONAR_TOKEN: ${{ inputs.sonar-token }}
       with:
