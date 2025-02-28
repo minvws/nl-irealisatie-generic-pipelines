@@ -1,2 +1,4 @@
-.github/CODEOWNERS @minvws/irealisatie-operations
 * @minvws/brba-developers
+
+# Last match takes precedence
+.github/CODEOWNERS @minvws/irealisatie-operations
