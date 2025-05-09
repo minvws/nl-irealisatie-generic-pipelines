@@ -14,14 +14,14 @@ runs:
   steps:
     - name: 'Run SonarCloud scanner'
       if: ${{contains(github.ref, '/pull/')}}
-      uses: SonarSource/sonarcloud-github-action@v2.2.0
+      uses: SonarSource/sonarqube-scan-action@v5
       env:
         SONAR_TOKEN: ${{ inputs.sonar-token }}
       with:
         projectBaseDir: ${{ inputs.project-base-dir }}
     - name: 'Run SonarCloud scanner'
       if: ${{!contains(github.ref, '/pull/')}}
-      uses: SonarSource/sonarcloud-github-action@v2.2.0
+      uses: SonarSource/sonarqube-scan-action@v5
       env:
         SONAR_TOKEN: ${{ inputs.sonar-token }}
       with:
