@@ -4,3 +4,49 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+
+  # Workaround for dependabot issue - https://github.com/dependabot/dependabot-core/issues/6345
+  - package-ecosystem: github-actions
+    directory: /.github/actions/composer-install
+    schedule:
+      interval: 'weekly'
+    groups:
+      actions:
+        patterns:
+        - "actions/*"
+
+  - package-ecosystem: github-actions
+    directory: /.github/actions/poetry-install
+    schedule:
+      interval: 'weekly'
+    groups:
+      actions:
+        patterns:
+        - "actions/*"
+
+  - package-ecosystem: github-actions
+    directory: /.github/actions/python-venv-package
+    schedule:
+      interval: 'weekly'
+    groups:
+      actions:
+        patterns:
+        - "actions/*"
+
+  - package-ecosystem: github-actions
+    directory: /.github/actions/sonarcloud
+    schedule:
+      interval: 'weekly'
+    groups:
+      actions:
+        patterns:
+        - "actions/*"
+
+  - package-ecosystem: github-actions
+    directory: /.github/actions/src-package
+    schedule:
+      interval: 'weekly'
+    groups:
+      actions:
+        patterns:
+        - "actions/*"
