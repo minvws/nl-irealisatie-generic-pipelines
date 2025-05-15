@@ -1,0 +1,56 @@
+name: "Creates a source package for an application"
+description: "Creates a tarball of source files and upload it as an artifact."
+
+inputs:
+  package_file_name:
+    description: "Name of the package (without extension) for example: nl-example-package."
+    required: true
+  include_paths:
+    description: "A space-separated list of paths to include in the package relative to the working_directory."
+    required: false
+    default: "."
+  working_directory:
+    description: "The base directory containing the source code, only required if it does not need to be the root folder."
+    required: false
+    default: "."
+  version_json_path:
+    description: "The location where version.json needs to be stored. For example `public/version.json`."
+    required: false
+    default: "version.json"
+  checkout_repository:
+    description: "Whether to checkout the repository (true or false)."
+    required: false
+    default: 'true'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      if: inputs.checkout_repository == 'true'
+      uses: actions/checkout@v4
+
+    - name: Extract version from tag
+      shell: bash
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+    - name: Set package file name
+      shell: bash
+      run: echo "PACKAGE_FILE_NAME=${{ inputs.package_file_name }}_${{ env.RELEASE_VERSION }}" >> $GITHUB_ENV
+
+    - name: Create package archive
+      shell: bash
+      run: |
+        ./.github/scripts/build-src-package.sh \
+          --base-dir "${{ inputs.working_directory }}" \
+          --includes "${{ inputs.include_paths }}" \
+          --version ${{ env.RELEASE_VERSION }} \
+          --version-json-path "${{ inputs.version_json_path }}" \
+          --git-ref ${{ github.sha }} \
+          --output "${{ env.PACKAGE_FILE_NAME }}.tar.gz"
+
+    - name: Upload package artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.PACKAGE_FILE_NAME }}
+        path: ${{ env.PACKAGE_FILE_NAME }}.tar.gz
+        if-no-files-found: error
