@@ -37,10 +37,16 @@ runs:
       shell: bash
       run: echo "PACKAGE_FILE_NAME=${{ inputs.package_file_name }}_${{ env.RELEASE_VERSION }}" >> $GITHUB_ENV
 
+    - name: Set GitHub Path
+      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      shell: bash
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+
     - name: Create package archive
       shell: bash
       run: |
-        ./build-src-package.sh \
+        build-src-package.sh \
           --base-dir "${{ inputs.working_directory }}" \
           --includes "${{ inputs.include_paths }}" \
           --version ${{ env.RELEASE_VERSION }} \
