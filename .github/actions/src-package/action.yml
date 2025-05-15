@@ -40,7 +40,7 @@ runs:
     - name: Create package archive
       shell: bash
       run: |
-        ./.github/scripts/build-src-package.sh \
+        ./build-src-package.sh \
           --base-dir "${{ inputs.working_directory }}" \
           --includes "${{ inputs.include_paths }}" \
           --version ${{ env.RELEASE_VERSION }} \
