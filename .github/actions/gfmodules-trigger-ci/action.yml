@@ -1,0 +1,12 @@
+name: "Trigger TI Suite"
+description: "Triggers a run on the TI Suite after merge to main"
+inputs:
+  orac_htpasswd:
+    description: "Authentication for ORAC endpoint"
+    required: true
+  endpoint_url:
+    description: "ORAC URL to trigger"
+    required: true
+runs:
+  using: "node20"
+  main: "./dist/index.js"

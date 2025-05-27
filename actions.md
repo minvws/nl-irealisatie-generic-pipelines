@@ -11,6 +11,8 @@ Available actions:
   - [Python - venv package](#python---venv-package)
 - PHP
   - [PHP - composer install](#php---composer-install)
+- GFModules
+  - [GFModules Trigger CI](#gfmodules-trigger-ci)
 
 ## Python - Poetry install
 
@@ -292,3 +294,50 @@ jobs:
 The action has inputs. The inputs are:
 
 - php_version: Semver version of the PHP version you want to use. For example `8.2` or `8.3`.
+
+## GFModules Trigger CI
+
+This pipeline is designed to trigger a TI (test integration) workflow for a GFModules project. It will trigger the workflow and pass the necessary parameters.
+
+### Usage
+
+Here is a basic example on how you can integrate it in your project.
+
+<details>
+  <summary>Example workflow</summary>
+
+This workflow is executed automatically on push to the main branch, except for dependabot merges.
+
+```yml
+name: GFModules Trigger CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger CI
+        uses: minvws/nl-irealisatie-generic-pipelines/.github/actions/gfmodules-trigger-ci@main
+        with:
+          orac_htpasswd: ${{secrets.ORAC_HTPASSWD}}
+          endpoint_url: ${{URL}}
+```
+
+</details>
+
+### Configuration
+
+The action has inputs. The inputs are:
+
+- orac_htpasswd: The HTPassword for the ORAC endpoint. This is a secret and should be stored in the repository secrets. It should be in the format of `user:pass`.
+- endpoint_url: The URL of the ORAC endpoint. This is a required input and should be provided as a string.
+
+### Update the bundle
+
+When making changes in the src/index.js, make sure you generate the bundle by running `npm run bundle`
