@@ -1,11 +1,10 @@
 {
     "name": "nl-irealisatie-generic-pipelines",
     "version": "1.0.0",
-    "description": "This repository contains a collection of generic GitHub Actions pipelines that can be used in any project. The pipelines are designed to be as generic as possible, so they can be easily reused in any project.",
+    "description": "",
     "main": "index.js",
-    "author": "",
+    "author": "minvws",
     "type": "module",
-    "license": "ISC",
     "exports": {
         ".": "./dist/index.js"
     },

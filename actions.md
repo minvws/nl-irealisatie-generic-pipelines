@@ -325,7 +325,7 @@ jobs:
       - name: Trigger CI
         uses: minvws/nl-irealisatie-generic-pipelines/.github/actions/gfmodules-trigger-ci@main
         with:
-          orac_htpasswd: ${{secrets.ORAC_HTPASSWORD}}
+          orac_htpasswd: ${{secrets.ORAC_HTPASSWD}}
           endpoint_url: ${{URL}}
 ```
 
@@ -335,5 +335,9 @@ jobs:
 
 The action has inputs. The inputs are:
 
-- orac_htpassword: The HTPassword for the ORAC endpoint. This is a secret and should be stored in the repository secrets. It should be a base64 encoded string (`user:pass`).
+- orac_htpasswd: The HTPassword for the ORAC endpoint. This is a secret and should be stored in the repository secrets. It should be in the format of `user:pass`.
 - endpoint_url: The URL of the ORAC endpoint. This is a required input and should be provided as a string.
+
+### Update the bundle
+
+When making changes in the src/index.js, make sure you generate the bundle by running `npm run bundle`

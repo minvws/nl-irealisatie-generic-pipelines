@@ -3,7 +3,7 @@ const github = require("@actions/github");
 
 async function run() {
     try {
-        const oracHtpasswd = core.getInput("orac_htpasswd");
+        const oracHtpasswd = btoa(core.getInput("orac_htpasswd"));
         const endpointUrl = core.getInput("endpoint_url");
 
         const { eventName, payload, sha, ref } = github.context;
