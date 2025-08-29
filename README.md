@@ -1,5 +1,10 @@
 # Generic Pipelines
 
+> [!WARNING]  
+> This repository is deprecated. The actions and workflows have been moved
+> to standalone repositories. Please see [actions.md](actions.md) and
+> [pipelines.md](pipelines.md) for references to the new repositories.
+
 This repository contains a collection of generic GitHub Actions pipelines that can be used in any project.
 The pipelines are designed to be as generic as possible, so they can be easily reused in any project.
 

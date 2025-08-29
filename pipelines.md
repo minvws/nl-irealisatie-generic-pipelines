@@ -1,5 +1,10 @@
 # Pipelines
 
+> [!WARNING]  
+> The workflows in this repository have been moved to standalone repositories.
+> You can find links to the new repositories above the instructions for each
+> workflow below.
+
 Here you can find the available pipelines. Each section will provide a description about the pipeline and how you can use it in your project.
 
 Available pipelines:
@@ -7,6 +12,9 @@ Available pipelines:
 - [Repo sync](#repo-sync)
 
 ## Repo sync
+
+> [!WARNING]
+> Please use [minvws/workflow-repo-sync](https://github.com/minvws/workflow-repo-sync) instead.
 
 This pipeline synchronizes:
 

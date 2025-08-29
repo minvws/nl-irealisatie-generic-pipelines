@@ -1,5 +1,10 @@
 # Actions
 
+> [!WARNING]
+> The actions in this repository have been moved to standalone repositories. You
+> can find links to the new repositories above the instructions for each action
+> below.
+
 Here you can find the available actions. Each section will provide a description about the action and how you can use it in your project.
 
 Available actions:
@@ -15,6 +20,9 @@ Available actions:
   - [GFModules Trigger CI](#gfmodules-trigger-ci)
 
 ## Python - Poetry install
+
+> [!WARNING]
+> Please use [minvws/action-python-poetry-install](https://github.com/minvws/action-python-poetry-install) instead.
 
 This pipeline is designed to install the dependencies of a Python project that uses Poetry. It will install the dependencies and cache them for future runs.
 
@@ -62,6 +70,9 @@ The action has inputs. The inputs are:
 - python_version: Semver version of the Python version you want to use. For example `3.11` or `3.9`.
 
 ## Python - venv package
+
+> [!WARNING]
+> Please use [minvws/action-python-venv-package](https://github.com/minvws/action-python-venv-package) instead.
 
 This pipeline is designed to export a venv package for the specified Python version with the installed requirements. When [Poetry](https://python-poetry.org/) is used, the requirements will be exported and the requirements will be installed in the venv.
 
@@ -152,6 +163,9 @@ The name of the artifact will be `<package_file_name>_venv_<tag_version>_python<
 The uploaded artifact will have a limited lifetime depending on what is currently configured.
 
 ## Source package
+
+> [!WARNING]
+> Please use [minvws/action-generic-build-package](https://github.com/minvws/action-generic-build-package) instead.
 
 This pipeline is designed to export a source package for an application.
 
@@ -249,6 +263,9 @@ The uploaded artifact will have a limited lifetime depending on what is currentl
 
 ## PHP - Composer install
 
+> [!WARNING]
+> Please use [minvws/action-php-composer-install](https://github.com/minvws/action-php-composer-install) instead.
+
 This pipeline is designed to install the dependencies of a PHP project that uses Composer. It will install the dependencies and cache them for future runs.
 
 ### Usage
@@ -296,6 +313,9 @@ The action has inputs. The inputs are:
 - php_version: Semver version of the PHP version you want to use. For example `8.2` or `8.3`.
 
 ## GFModules Trigger CI
+
+> [!WARNING]
+> Please use [minvws/gfmodules-action-trigger-ci](https://github.com/minvws/gfmodules-action-trigger-ci) instead.
 
 This pipeline is designed to trigger a TI (test integration) workflow for a GFModules project. It will trigger the workflow and pass the necessary parameters.
 
