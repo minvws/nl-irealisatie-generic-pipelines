@@ -23,6 +23,11 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Log deprecation warning
+      shell: bash
+      run: |
+        echo "::warning title=Action deprecated::Please switch to the standlone version of this action: https://github.com/minvws/action-python-venv-package"
+
     - name: Set release version
       shell: bash
       run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV

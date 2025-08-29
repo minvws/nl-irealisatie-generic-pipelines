@@ -8,6 +8,11 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Log deprecation warning
+      shell: bash
+      run: |
+        echo "::warning title=Action deprecated::Please switch to the standlone version of this action: https://github.com/minvws/action-python-poetry-install"
+
     - name: Update PATH
       shell: bash
       run: echo "$HOME/.local/bin" >> $GITHUB_PATH
