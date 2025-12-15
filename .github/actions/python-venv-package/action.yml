@@ -97,7 +97,7 @@ runs:
       shell: bash
       run: rm -rf ${{ inputs.working_directory }}/.venv
 
-    - uses: actions/cache/restore@v4
+    - uses: actions/cache/restore@v5
       id: cache-venv
       with:
         path: ${{ inputs.working_directory }}/.venv
@@ -169,7 +169,7 @@ runs:
       run: |
         rm requirements-vcs.txt requirements-packages.txt
 
-    - uses: actions/cache/save@v4
+    - uses: actions/cache/save@v5
       if: steps.cache-venv.outputs.cache-hit != 'true'
       with:
         path: ${{ inputs.working_directory }}/.venv
@@ -191,7 +191,7 @@ runs:
       run: tar -czf ${{ env.PACKAGE_FILE_NAME }}.tar.gz .venv
 
     - name: Upload venv tar
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: ${{ env.PACKAGE_FILE_NAME }}
         path: ${{ inputs.working_directory }}/${{ env.PACKAGE_FILE_NAME }}.tar.gz
