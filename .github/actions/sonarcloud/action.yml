@@ -18,14 +18,14 @@ runs:
         echo "::warning title=Action deprecated::Please switch to the standlone version of this action: https://github.com/minvws/action-sonarqube"
     - name: 'Run SonarCloud scanner'
       if: ${{contains(github.ref, '/pull/')}}
-      uses: SonarSource/sonarqube-scan-action@v6
+      uses: SonarSource/sonarqube-scan-action@v7
       env:
         SONAR_TOKEN: ${{ inputs.sonar-token }}
       with:
         projectBaseDir: ${{ inputs.project-base-dir }}
     - name: 'Run SonarCloud scanner'
       if: ${{!contains(github.ref, '/pull/')}}
-      uses: SonarSource/sonarqube-scan-action@v6
+      uses: SonarSource/sonarqube-scan-action@v7
       env:
         SONAR_TOKEN: ${{ inputs.sonar-token }}
       with:
