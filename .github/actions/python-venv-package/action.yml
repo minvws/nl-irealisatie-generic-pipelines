@@ -191,7 +191,7 @@ runs:
       run: tar -czf ${{ env.PACKAGE_FILE_NAME }}.tar.gz .venv
 
     - name: Upload venv tar
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: ${{ env.PACKAGE_FILE_NAME }}
         path: ${{ inputs.working_directory }}/${{ env.PACKAGE_FILE_NAME }}.tar.gz
