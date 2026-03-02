@@ -60,7 +60,7 @@ runs:
           --output "${{ env.PACKAGE_FILE_NAME }}.tar.gz"
 
     - name: Upload package artifact
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: ${{ env.PACKAGE_FILE_NAME }}
         path: ${{ env.PACKAGE_FILE_NAME }}.tar.gz
