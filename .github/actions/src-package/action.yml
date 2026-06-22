@@ -32,7 +32,7 @@ runs:
 
     - name: Checkout code
       if: inputs.checkout_repository == 'true'
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Extract version from tag
       shell: bash
